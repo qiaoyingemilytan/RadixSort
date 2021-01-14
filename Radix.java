@@ -4,12 +4,12 @@ public class Radix{
   }
 
   public static int length(int n){
-    int count = 0;
-    while(n != 0){
-      n = n/10;
-      count ++;
+    String integer = "" + n;
+    int len = integer.length();
+    if(integer.charAt(0) == '-'){
+      return len - 1;
     }
-    return count;
+    return len;
   }
 
   public static void merge(SortableLinkedList original,SortableLinkedList[]buckets){
