@@ -1,5 +1,8 @@
 public class Radix{
   public static int nth(int n, int col){
+    if(col > length(n)-1){
+      return 0;
+    }
     return (int) (n % Math.pow(10, (col+1)) / Math.pow(10, col));
   }
 
@@ -30,14 +33,12 @@ public class Radix{
       buckets[i] = new SortableLinkedList();
     }
     for(int places = 0; places < maxPlace; places++){
+      SortableLinkedList pass = new SortableLinkedList();
       for(int index = 0; index < data.size(); index++){
-        int current = data.get(0);
-        if(length(current)-1 <= places){
-          buckets[nth(current,places)].add(current);
-          data.remove(0);
-        }
+        buckets[nth(data.get(index),places)].add(data.get(index));
       }
-      merge(data, buckets);
+      merge(pass, buckets);
+      data = pass;
     }
   }
 
