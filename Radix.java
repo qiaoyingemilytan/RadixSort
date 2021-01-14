@@ -33,13 +33,12 @@ public class Radix{
       buckets[i] = new SortableLinkedList();
     }
     for(int places = 0; places < maxPlace; places++){
-      SortableLinkedList pass = new SortableLinkedList();
-      for(int index = 0; index < data.size(); index++){
-        buckets[nth(data.get(index),places)].add(data.get(index));
+      int index = 0;
+      while(index < data.size()){
+        buckets[nth(data.get(0),places)].add(data.get(0));
+        data.remove(0);
       }
-      merge(pass, buckets);
-      data = pass;
-
+      merge(data, buckets);
     }
   }
 
