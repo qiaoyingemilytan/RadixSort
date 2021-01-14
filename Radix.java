@@ -1,8 +1,5 @@
 public class Radix{
   public static int nth(int n, int col){
-    if(col > length(n)-1){
-      return 0;
-    }
     return (int) (n % Math.pow(10, (col+1)) / Math.pow(10, col));
   }
 
@@ -22,12 +19,9 @@ public class Radix{
   }
 
   public static void radixSortSimple(SortableLinkedList data){
-    SortableLinkedList pass = new SortableLinkedList();
-    pass.extend(data);
     int maxPlace = 1;
-    int i = 0;
-    while(i < pass.size()){
-      int x = pass.remove(0);
+    for(int i = 0; i < data.size(); i++){
+      int x = data.remove(0);
       if(length(x) > maxPlace){
         maxPlace = length(x);
       }
@@ -38,8 +32,7 @@ public class Radix{
       buckets[j] = new SortableLinkedList();
     }
     for(int places = 0; places < maxPlace; places++){
-      int index = 0;
-      while(index < data.size()){
+      while(0 < data.size()){
         int x = data.remove(0);
         buckets[nth(x,places)].add(x);
       }
