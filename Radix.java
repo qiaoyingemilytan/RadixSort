@@ -1,6 +1,6 @@
 public class Radix{
   public static int nth(int n, int col){
-    return (int) (n % Math.pow(10, (col+1)) / Math.pow(10, col));
+    return Math.abs((int) (n % Math.pow(10, (col+1)) / Math.pow(10, col)));
   }
 
   public static int length(int n){
@@ -41,6 +41,35 @@ public class Radix{
   }
 
   public static void radixSort(SortableLinkedList data){
+    int maxPlace = 1;
+    for(int i = 0; i < data.size(); i++){
+      int x = data.remove(0);
+      if(length(x) > maxPlace){
+        maxPlace = length(x);
+      }
+      data.add(x);
+    }
+    SortableLinkedList[] posBuckets = new SortableLinkedList[10];
+    SortableLinkedList [] negBuckets = new SortableLinkedList[10];
+    for(int i = 0; i < 10; i++){
+      posBuckets[i] = new SortableLinkedList();
+    }
+    for(int j = 0; j < 10; j++){
+      negBuckets[j] = new SortableLinkedList();
+    }
+    for(int places = 0; places < maxPlace; places++){
+      while(0 < data.size()){
+        int x = data.remove(0);
+        if(x >= 0){
+          posBuckets[nth(x,places)].add(x);
+        }
+        else{
+          negBuckets[9 - nth(x,places)].add(x);
+        }
+      }
+      merge(data, negBuckets);
+      merge(data, posBuckets);
+    }
   }
 
 }
